@@ -25,6 +25,9 @@
 	"_moduleAliases": {
 		"@/resources": "dist/resources",
 		"@/utils": "dist/utils",
-		"@/middleware": "dist/middleware"
+		"@/middleware": "dist/middleware",
+		"@/controllers": "dist/controllers",
+		"@/models": "dist/models",
+		"@/routes": "dist/routes"
 	}
 }
