@@ -2,8 +2,8 @@ import express, { Application, Request, Response } from "express";
 const app: Application = express();
 
 import auth from "@/routes/auth";
-import userRoutes from "@/routes/users";
-import exerciseroutes from "@/routes/exercises";
+import users from "@/routes/users";
+import exercises from "@/routes/exercises";
 
 import dotenv from "dotenv";
 import cors from "cors";
@@ -17,6 +17,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", auth);
+app.use("/api/users", users);
+app.use("/api/exercises", exercises);
 
 const PORT = 5000;
 app.listen(PORT, () => {
