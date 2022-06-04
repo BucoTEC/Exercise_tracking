@@ -5,6 +5,8 @@ import auth from "@/routes/auth";
 import users from "@/routes/users";
 import exercises from "@/routes/exercises";
 
+import connectDb from "@/db/connectDB";
+
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -22,5 +24,6 @@ app.use("/api/exercises", exercises);
 
 const PORT = 5000;
 app.listen(PORT, () => {
+	connectDb();
 	console.log(`Server is operational on port: ${PORT}`);
 });
