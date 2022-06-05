@@ -21,7 +21,7 @@ Exercise.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		durations: {
+		duration: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},

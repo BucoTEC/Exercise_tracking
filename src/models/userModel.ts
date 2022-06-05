@@ -3,7 +3,14 @@ import connectDb from "@/db/connectDB";
 
 const sequelize: Sequelize = connectDb();
 
-class User extends Model {}
+interface UserAttributes {
+	id: number | null;
+	username: string;
+	email: string;
+	password: string;
+}
+
+class User extends Model<UserAttributes> {}
 
 User.init(
 	{
