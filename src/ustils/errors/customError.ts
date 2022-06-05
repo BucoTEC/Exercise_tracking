@@ -8,3 +8,4 @@ class ResError extends Error {
 }
 
 export default ResError;
+// TODO fix erorr handler

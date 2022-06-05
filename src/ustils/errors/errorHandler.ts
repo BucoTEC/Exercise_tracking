@@ -9,10 +9,9 @@ const errorHandler = (
 ) => {
 	// console.error(err.stack);
 	if (err instanceof ResError) {
-		res.status(err.status || 500).json(`An error acured: ${err.message}`);
-	}
-	if (err instanceof Error) {
-		res.status(500).json(err.message);
+		return res
+			.status(err.status || 500)
+			.json(`An error acured: ${err.message}`);
 	}
 };
 
