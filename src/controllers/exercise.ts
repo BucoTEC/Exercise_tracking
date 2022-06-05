@@ -17,6 +17,8 @@ export const createExercise = async (
 		type: "swimming",
 	});
 	newExercise.set({ ownerId: testUser });
+
+	await newExercise.save();
 	res.json({
 		testUser,
 		newExercise,
