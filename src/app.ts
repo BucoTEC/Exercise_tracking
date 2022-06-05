@@ -4,6 +4,8 @@ const app: Application = express();
 import auth from "@/routes/auth";
 import users from "@/routes/users";
 import exercises from "@/routes/exercises";
+import ResError from "ustils/errors/customError";
+import errorHandler from "ustils/errors/errorHandler";
 
 import connectDb from "@/db/connectDB";
 
@@ -21,6 +23,13 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/exercises", exercises);
+
+app.all("*", () => {
+	throw new ResError(404, "Route not found");
+});
+
+//error handling
+app.use(errorHandler);
 
 const PORT = 5000;
 app.listen(PORT, () => {
