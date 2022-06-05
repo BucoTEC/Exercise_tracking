@@ -14,6 +14,7 @@ export const login = async (req: Request, res: Response) => {
 	// 	if (error instanceof Error) res.json(error.message);
 	// }
 	throw new ResError(500, "test of error");
+	res.json("test");
 };
 
 export const register = (req: Request, res: Response): void => {

@@ -14,6 +14,9 @@ const errorHandler = (
 			.status(err.status || 500)
 			.json(`An error acured: ${err.message}`);
 	}
+	if (err instanceof Error) {
+		res.status(500).json(err.message);
+	}
 };
 
 export default errorHandler;
