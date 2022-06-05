@@ -36,5 +36,15 @@
 		"@/models": "dist/models",
 		"@/routes": "dist/routes",
 		"@/db": "dist/db"
+	},
+	"eslintConfig": {
+		"rules": {
+			"no-unused-vars": [
+				"error",
+				{
+					"argsIgnorePattern": "next"
+				}
+			]
+		}
 	}
 }
