@@ -1,7 +1,16 @@
 import { Request, Response } from "express";
 
-export const login = (req: Request, res: Response): void => {
-	res.json("login route");
+import User from "@/models/userModel";
+
+export const login = async (req: Request, res: Response) => {
+	try {
+		const test: User = User.build({ username: "Adnan", password: "0401" });
+		await test.save();
+
+		res.json({ msg: "succes", newUser: test });
+	} catch (error) {
+		if (error instanceof Error) res.json(error.message);
+	}
 };
 
 export const register = (req: Request, res: Response): void => {
