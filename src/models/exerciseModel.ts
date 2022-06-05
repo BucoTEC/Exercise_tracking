@@ -1,5 +1,6 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import connectDb from "@/db/connectDB";
+import User from "@/models/userModel";
 
 const sequelize: Sequelize = connectDb();
 
@@ -34,3 +35,12 @@ Exercise.init(
 	},
 	{ sequelize, modelName: "exercise" }
 );
+
+Exercise.hasOne(User);
+
+const createExerciseTable = async () => {
+	await Exercise.sync();
+};
+createExerciseTable();
+
+export default Exercise;
