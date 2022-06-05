@@ -36,7 +36,7 @@ Exercise.init(
 	{ sequelize, modelName: "exercise" }
 );
 
-Exercise.hasOne(User);
+Exercise.hasOne(User, { foreignKey: "ownerID" });
 
 const createExerciseTable = async () => {
 	await Exercise.sync();
