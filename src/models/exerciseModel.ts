@@ -8,7 +8,12 @@ class Exercise extends Model {}
 
 Exercise.init(
 	{
-		data: {
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			primaryKey: true,
+		},
+		date: {
 			type: DataTypes.DATE,
 			allowNull: false,
 		},
@@ -36,7 +41,7 @@ Exercise.init(
 	{ sequelize, modelName: "exercise" }
 );
 
-Exercise.hasOne(User, { foreignKey: "ownerID" });
+Exercise.belongsTo(User, { foreignKey: "ownerId" });
 
 const createExerciseTable = async () => {
 	await Exercise.sync();
