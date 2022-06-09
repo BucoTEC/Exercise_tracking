@@ -4,7 +4,7 @@ import connectDb from "@/db/connectDB";
 const sequelize: Sequelize = connectDb();
 
 interface UserAttributes {
-	id: number;
+	id: number | null;
 	username: string;
 	email: string;
 	password: string;

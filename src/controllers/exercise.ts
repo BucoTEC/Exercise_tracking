@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import "express-async-errors";
 import User from "@/models/userModel";
-// import Exercise from "@/models/exerciseModel";
+import Exercise from "@/models/exerciseModel";
 
 export const createExercise = async (
 	req: Request,
@@ -9,21 +9,21 @@ export const createExercise = async (
 ): Promise<void> => {
 	const testUser = await User.findByPk(1);
 	res.json(testUser);
-	// const newExercise = Exercise.build({
-	// 	date: new Date(),
-	// 	description: "test exercise",
-	// 	duration: "10min",
-	// 	difficulty: "1/5",
-	// 	exaustion: "2/5",
-	// 	type: "swimming",
-	// });
-	// newExercise.set({ ownerId: testUser != null && testUser.id });
+	const newExercise = Exercise.build({
+		date: new Date(),
+		description: "test exercise",
+		duration: "10min",
+		difficulty: "1/5",
+		exaustion: "2/5",
+		type: "swimming",
+	});
+	newExercise.set({ ownerId: 1 });
 
-	// await newExercise.save();
-	// res.json({
-	// 	testUser,
-	// 	newExercise,
-	// });
+	await newExercise.save();
+	res.json({
+		testUser,
+		newExercise,
+	});
 };
 
 export const findOneExercise = (req: Request, res: Response): void => {
