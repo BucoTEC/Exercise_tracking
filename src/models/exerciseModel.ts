@@ -4,6 +4,8 @@ import User from "@/models/userModel";
 
 const sequelize: Sequelize = connectDb();
 
+// TODO refactore ts with sequlize-typescript
+
 class Exercise extends Model {}
 
 Exercise.init(
