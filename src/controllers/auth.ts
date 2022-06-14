@@ -3,16 +3,12 @@ import "express-async-errors";
 
 import User from "@/models/userModel";
 
-export const login = async (req: Request, res: Response) => {
-	const test: User = User.build({
-		username: "Adnan",
-		password: "0401",
-		email: "adnan@mail.com",
-	});
-	await test.save();
-	res.json({ msg: "succes", newUser: test });
+export const login = (req: Request, res: Response) => {
+	res.json("login route");
 };
 
-export const register = (req: Request, res: Response): void => {
-	res.json("registr route");
+export const register = async (req: Request, res: Response) => {
+	const test = User.build(req.body);
+	await test.save();
+	return res.json({ msg: "succes", newUser: test });
 };
