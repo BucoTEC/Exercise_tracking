@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
 
-interface RequestNew extends Request {
+interface ReqWithUser extends Request {
 	userData?: {
 		userId: string;
 		userEmail: string;
@@ -13,7 +13,7 @@ interface RequestNew extends Request {
 const tokenSecret = process.env.JWT_SECRET || "tajna"; // ! ADD TOKEN IN ENV IF MISSING
 
 const authVerificator = async (
-	req: RequestNew,
+	req: ReqWithUser,
 	res: Response,
 	next: NextFunction
 ) => {
