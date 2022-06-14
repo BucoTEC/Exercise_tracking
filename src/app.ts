@@ -4,8 +4,8 @@ const app: Application = express();
 import auth from "@/routes/auth";
 import users from "@/routes/users";
 import exercises from "@/routes/exercises";
-import ResError from "ustils/errors/customError";
-import errorHandler from "ustils/errors/errorHandler";
+import ResError from "@/utils/errors/customError";
+import errorHandler from "@/utils/errors/errorHandler";
 
 import connectDb from "@/db/connectDB";
 

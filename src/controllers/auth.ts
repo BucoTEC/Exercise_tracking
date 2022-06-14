@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import "express-async-errors";
 
 import User from "@/models/userModel";
-import ResError from "ustils/errors/customError";
+import ResError from "@/utils/errors/customError";
 
 dotenv.config();
 

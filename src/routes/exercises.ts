@@ -9,11 +9,9 @@ import {
 	deleteExercise,
 } from "@/controllers/exercise";
 
-import authVerificator from "@/middleware/auth.middleware";
-
 router.post("/", createExercise);
 
-router.get("/", authVerificator, findAllExercise);
+router.get("/", findAllExercise);
 
 router.get("/:id", findOneExercise);
 

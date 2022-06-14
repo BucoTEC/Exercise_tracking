@@ -1,14 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
+import ReqWithUser from "@/utils/types/ReqWithUser";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
-
-interface ReqWithUser extends Request {
-	userData?: {
-		userId: string;
-		userEmail: string;
-	};
-}
 
 const tokenSecret = process.env.JWT_SECRET || "tajna"; // ! ADD TOKEN IN ENV IF MISSING
 
