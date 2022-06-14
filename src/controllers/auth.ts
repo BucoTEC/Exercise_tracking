@@ -25,7 +25,7 @@ export const login = async (req: Request, res: Response) => {
 	validPassword = await bcrypt.compare(password, existingUser.password);
 
 	if (!validPassword) {
-		throw new Error("Wrong credentials, user not found");
+		throw new Error("Wrong credentials, user not found test");
 	}
 
 	const token = jwt.sign(
@@ -36,11 +36,10 @@ export const login = async (req: Request, res: Response) => {
 		tokenSecret
 		// { expiresIn: "1h" }
 	);
-	res.json({
+	return res.json({
 		token,
 		userId: existingUser.id,
 	});
-	res.json("login route");
 };
 
 // 	REGISTER CONTROLLER
