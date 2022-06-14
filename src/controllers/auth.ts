@@ -11,9 +11,39 @@ dotenv.config();
 
 const tokenSecret = process.env.JWT_SECRET || "tajna";
 
-export const login = (req: Request, res: Response) => {
+// 	LOGIN CONTROLLER
+
+export const login = async (req: Request, res: Response) => {
+	const { email, password } = req.body;
+	const existingUser = await User.findOne({ where: { email } });
+
+	if (!existingUser) {
+		throw new Error("Wrong credentials, user not found");
+	}
+
+	let validPassword = false;
+	validPassword = await bcrypt.compare(password, existingUser.password);
+
+	if (!validPassword) {
+		throw new Error("Wrong credentials, user not found");
+	}
+
+	const token = jwt.sign(
+		{
+			userId: existingUser.id,
+			email: existingUser.email,
+		},
+		tokenSecret
+		// { expiresIn: "1h" }
+	);
+	res.json({
+		token,
+		userId: existingUser.id,
+	});
 	res.json("login route");
 };
+
+// 	REGISTER CONTROLLER
 
 export const register = async (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
