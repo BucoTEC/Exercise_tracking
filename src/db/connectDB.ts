@@ -10,7 +10,6 @@ const connectDb = () => {
 
 	sequelize
 		.authenticate()
-		.then(() => console.log("db connection is open"))
 		.catch((err) => console.log(`Ups there was an error: ${err}`));
 	return sequelize;
 };
