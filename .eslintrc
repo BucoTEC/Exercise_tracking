@@ -13,6 +13,7 @@
 		"@typescript-eslint/no-unused-vars": [
 			"error",
 			{ "argsIgnorePattern": "next" }
-		]
+		],
+		"@typescript-eslint/no-explicit-any": "off"
 	}
 }

@@ -39,6 +39,7 @@ export const login = async (req: Request, res: Response) => {
 	return res.json({
 		token,
 		userId: existingUser.id,
+		userEmail: existingUser.email,
 	});
 };
 
@@ -62,6 +63,7 @@ export const register = async (req: Request, res: Response) => {
 	const token = jwt.sign(
 		{
 			userId: newUser.id,
+			userEmail: newUser.email,
 		},
 		tokenSecret
 		// { expiresIn: "10m" }
