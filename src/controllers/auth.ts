@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import "express-async-errors";
 
 import User from "@/models/userModel";
+import ResError from "ustils/errors/customError";
 
 dotenv.config();
 
@@ -17,6 +18,11 @@ export const login = (req: Request, res: Response) => {
 export const register = async (req: Request, res: Response) => {
 	const { username, email, password } = req.body;
 
+	const user = await User.findOne({ where: { email } });
+
+	if (user) {
+		throw new ResError(404, "User already exists");
+	}
 	const hashedPassword = await bcrypt.hash(password, 12);
 
 	const newUser = await User.create({
