@@ -28,8 +28,8 @@ export const register = async (req: Request, res: Response) => {
 		{
 			userId: newUser.id,
 		},
-		tokenSecret,
-		{ expiresIn: "10m" }
+		tokenSecret
+		// { expiresIn: "10m" }
 	);
 	return res.json({ msg: "succes", newUser: newUser, token });
 };
