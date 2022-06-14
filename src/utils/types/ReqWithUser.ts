@@ -2,7 +2,7 @@ import { Request } from "express";
 
 interface ReqWithUser extends Request {
 	userData?: {
-		userId: string;
+		userId: number;
 		userEmail: string;
 	};
 }

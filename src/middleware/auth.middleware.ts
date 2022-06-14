@@ -20,7 +20,6 @@ const authVerificator = async (
 		throw new Error("Authentication failed!");
 	}
 	const decodedToken: any = jwt.verify(token, tokenSecret);
-	console.log(decodedToken);
 
 	const { userId, userEmail } = decodedToken;
 
