@@ -1,17 +1,23 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model, Sequelize, Optional } from "sequelize";
 import connectDb from "@/db/connectDB";
 
 const sequelize: Sequelize = connectDb();
 
 // TODO add sequlize ts
-interface UserAttributes {
-	id: number | null;
+type UserAttributes = {
+	id: number;
 	username: string;
 	email: string;
 	password: string;
-}
+};
+type UserCreationAttributes = Optional<UserAttributes, "id">;
 
-class User extends Model<UserAttributes> {}
+class User extends Model<UserAttributes, UserCreationAttributes> {
+	declare id: number;
+	declare username: string;
+	declare email: string;
+	declare password: string;
+}
 
 User.init(
 	{
