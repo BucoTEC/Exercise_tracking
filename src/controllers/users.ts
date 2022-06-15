@@ -1,4 +1,5 @@
 import { Response } from "express";
+import bcrypt from "bcrypt";
 import ReqWithUser from "@/utils/types/ReqWithUser";
 import "express-async-errors";
 
@@ -10,6 +11,9 @@ export const updateUser = async (req: ReqWithUser, res: Response) => {
 
 	if (parseInt(id) !== userData?.userId) {
 		throw new Error("not owner");
+	}
+	if (req.body.password) {
+		req.body.password = await bcrypt.hash(req.body.password, 12);
 	}
 	const updatedUser = await User.update(req.body, { where: { id } });
 
