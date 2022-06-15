@@ -5,7 +5,10 @@ import "express-async-errors";
 
 import User from "@/models/userModel";
 
-export const updateUser = async (req: ReqWithUser, res: Response) => {
+export const updateUser = async (
+	req: ReqWithUser,
+	res: Response
+): Promise<void> => {
 	const { id } = req.params;
 	const { userData } = req;
 
@@ -20,7 +23,10 @@ export const updateUser = async (req: ReqWithUser, res: Response) => {
 	res.json({ msg: "successfuly updated user" });
 };
 
-export const deleteUser = async (req: ReqWithUser, res: Response) => {
+export const deleteUser = async (
+	req: ReqWithUser,
+	res: Response
+): Promise<void> => {
 	const { userData } = req;
 	const { id } = req.params;
 

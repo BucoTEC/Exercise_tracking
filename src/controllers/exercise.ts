@@ -1,27 +1,27 @@
 import { Request, Response } from "express";
 import "express-async-errors";
-import User from "@/models/userModel";
+// import User from "@/models/userModel";
 import Exercise from "@/models/exerciseModel";
+import ReqWithUser from "@/utils/types/ReqWithUser";
 
 export const createExercise = async (
-	req: Request,
+	req: ReqWithUser,
 	res: Response
 ): Promise<void> => {
-	const testUser = await User.findByPk(1);
-	res.json(testUser);
-	const newExercise = Exercise.build({
-		date: new Date(),
-		description: "test exercise",
-		duration: "10min",
-		difficulty: "1/5",
-		exaustion: "2/5",
-		type: "swimming",
-	});
-	newExercise.set({ ownerId: 1 });
+	const { userData } = req;
+
+	if (req.body.date) {
+		req.body.date = new Date(req.body.date);
+	} else {
+		req.body.date = new Date();
+	}
+
+	const newExercise = await Exercise.create(req.body);
+	newExercise.set({ ownerId: userData?.userId });
 
 	await newExercise.save();
 	res.json({
-		testUser,
+		msg: "succesfuli created new exercise",
 		newExercise,
 	});
 };
