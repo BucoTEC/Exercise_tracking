@@ -15,9 +15,9 @@ export const updateUser = async (req: ReqWithUser, res: Response) => {
 	if (req.body.password) {
 		req.body.password = await bcrypt.hash(req.body.password, 12);
 	}
-	const updatedUser = await User.update(req.body, { where: { id } });
+	await User.update(req.body, { where: { id } });
 
-	res.json({ msg: "successfuly updated user", updatedUser });
+	res.json({ msg: "successfuly updated user" });
 };
 
 export const deleteUser = async (req: ReqWithUser, res: Response) => {
