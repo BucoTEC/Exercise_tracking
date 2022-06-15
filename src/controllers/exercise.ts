@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import "express-async-errors";
-// import User from "@/models/userModel";
 import Exercise from "@/models/exerciseModel";
 import ReqWithUser from "@/utils/types/ReqWithUser";
 
@@ -65,6 +64,24 @@ export const updateExercise = (req: Request, res: Response): void => {
 	res.json("update exercise route");
 };
 
-export const deleteExercise = (req: Request, res: Response): void => {
-	res.json("delet exercise route");
+export const deleteExercise = async (
+	req: ReqWithUser,
+	res: Response
+): Promise<void> => {
+	const { userData } = req;
+	const { id } = req.params;
+
+	const exercise = await Exercise.findByPk(id);
+
+	if (!exercise) {
+		throw new Error("no exercise found");
+	}
+
+	if (exercise.ownerId !== userData?.userId) {
+		throw new Error("not owner");
+	}
+
+	await Exercise.destroy({ where: { id } });
+
+	res.json("succesfly delted exercise");
 };
