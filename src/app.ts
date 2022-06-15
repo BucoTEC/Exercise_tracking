@@ -8,6 +8,7 @@ import ResError from "@/utils/errors/customError";
 import errorHandler from "@/utils/errors/errorHandler";
 
 import connectDb from "@/db/connectDB";
+import authVerificator from "@/middleware/auth.middleware";
 
 import dotenv from "dotenv";
 import cors from "cors";
@@ -21,8 +22,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/auth", auth);
-app.use("/api/users", users);
-app.use("/api/exercises", exercises);
+app.use("/api/users", authVerificator, users);
+app.use("/api/exercises", authVerificator, exercises);
 
 app.all("*", () => {
 	throw new ResError(404, "Route not found");

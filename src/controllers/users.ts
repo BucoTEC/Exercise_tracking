@@ -1,11 +1,19 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import ReqWithUser from "@/utils/types/ReqWithUser";
 import "express-async-errors";
 
 import User from "@/models/userModel";
 
-export const updateUser = (req: Request, res: Response): void => {
-	res.json("update route");
+export const updateUser = async (req: ReqWithUser, res: Response) => {
+	const { id } = req.params;
+	const { userData } = req;
+
+	if (parseInt(id) !== userData?.userId) {
+		throw new Error("not owner");
+	}
+	const updatedUser = await User.update(req.body, { where: { id } });
+
+	res.json({ msg: "successfuly updated user", updatedUser });
 };
 
 export const deleteUser = async (req: ReqWithUser, res: Response) => {
