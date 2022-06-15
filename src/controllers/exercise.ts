@@ -26,8 +26,20 @@ export const createExercise = async (
 	});
 };
 
-export const findOneExercise = (req: Request, res: Response): void => {
-	res.json("find one exercise route");
+export const findOneExercise = async (
+	req: ReqWithUser,
+	res: Response
+): Promise<void> => {
+	const { userData } = req;
+	const { id } = req.params;
+
+	const oneExercise = await Exercise.findByPk(id);
+
+	if (oneExercise?.ownerId !== userData?.userId) {
+		throw new Error("not owner");
+	}
+
+	res.json({ msg: "yor wanted exercie", oneExercise });
 };
 
 export const findAllExercise = (req: Request, res: Response): void => {

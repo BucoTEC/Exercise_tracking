@@ -1,12 +1,32 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model, Sequelize, Optional } from "sequelize";
 import connectDb from "@/db/connectDB";
 import User from "@/models/userModel";
 
 const sequelize: Sequelize = connectDb();
 
-// TODO refactore ts with sequlize-typescript
+type ExerciseAttributes = {
+	id: number;
+	date: object;
+	description: string;
+	duration: string;
+	difficulty: string;
+	exaustion: string;
+	type: string;
+	ownerId: number;
+};
 
-class Exercise extends Model {}
+type ExerciseCreationAttributes = Optional<ExerciseAttributes, "id">;
+
+class Exercise extends Model<ExerciseCreationAttributes, ExerciseAttributes> {
+	declare id: number;
+	declare date: object;
+	declare description: string;
+	declare duration: string;
+	declare difficulty: string;
+	declare exaustion: string;
+	declare type: string;
+	declare ownerId: number;
+}
 
 Exercise.init(
 	{
@@ -38,6 +58,9 @@ Exercise.init(
 		type: {
 			type: DataTypes.STRING,
 			allowNull: false,
+		},
+		ownerId: {
+			type: DataTypes.NUMBER,
 		},
 	},
 	{ sequelize, modelName: "exercise" }

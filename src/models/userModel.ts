@@ -3,7 +3,6 @@ import connectDb from "@/db/connectDB";
 
 const sequelize: Sequelize = connectDb();
 
-// TODO add sequlize ts
 type UserAttributes = {
 	id: number;
 	username: string;
