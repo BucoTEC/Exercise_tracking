@@ -42,8 +42,23 @@ export const findOneExercise = async (
 	res.json({ msg: "yor wanted exercie", oneExercise });
 };
 
-export const findAllExercise = (req: Request, res: Response): void => {
-	res.json("find all exercise route");
+export const findAllExercise = async (
+	req: ReqWithUser,
+	res: Response
+): Promise<Response> => {
+	const { userData } = req;
+	const allExercises = await Exercise.findAll({
+		where: { ownerId: userData?.userId },
+	});
+
+	if (allExercises.length < 1) {
+		return res.json("current user has no exercises");
+	}
+
+	return res.json({
+		msg: "all current user exercises",
+		allExercises,
+	});
 };
 
 export const updateExercise = (req: Request, res: Response): void => {
