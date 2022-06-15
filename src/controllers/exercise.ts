@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import "express-async-errors";
 import Exercise from "@/models/exerciseModel";
 import ReqWithUser from "@/utils/types/ReqWithUser";
@@ -60,8 +60,29 @@ export const findAllExercise = async (
 	});
 };
 
-export const updateExercise = (req: Request, res: Response): void => {
-	res.json("update exercise route");
+export const updateExercise = async (
+	req: ReqWithUser,
+	res: Response
+): Promise<void> => {
+	const { id } = req.params;
+	const { userData } = req;
+
+	const exercise = await Exercise.findByPk(id);
+
+	if (!exercise) {
+		throw new Error("no exercise found");
+	}
+
+	if (exercise.ownerId !== userData?.userId) {
+		throw new Error("not owner");
+	}
+	if (req.body.date) {
+		req.body.date = new Date(req.body.date);
+	}
+
+	await Exercise.update(req.body, { where: { id } });
+
+	res.json({ msg: "successfuly updated exercise" });
 };
 
 export const deleteExercise = async (
