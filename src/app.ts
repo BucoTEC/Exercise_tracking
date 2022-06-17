@@ -28,7 +28,7 @@ app.get("/fail", (req: Request, res: Response) => {
 });
 
 app.get("/success", (req: Request, res: Response) => {
-	res.send("succes login");
+	res.send(req.user);
 });
 
 app.get(
@@ -39,9 +39,11 @@ app.get(
 app.get(
 	"/google/cal",
 	passport.authenticate("google", {
-		successRedirect: "/success",
-		failureRedirect: "/fail",
-	})
+		session: false,
+	}),
+	(req: Request, res: Response) => {
+		res.send(req.user);
+	}
 );
 
 app.use("/api/auth", auth);
