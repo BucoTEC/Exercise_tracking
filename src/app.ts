@@ -23,14 +23,6 @@ app.get("/", (req: Request, res: Response) => {
 	res.send("<a href='/google/auth'>Login with google</a>");
 });
 
-app.get("/fail", (req: Request, res: Response) => {
-	res.send("fail login");
-});
-
-app.get("/success", (req: Request, res: Response) => {
-	res.send(req.user);
-});
-
 app.get(
 	"/google/auth",
 	passport.authenticate("google", { scope: ["email", "profile"] })
