@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import passport from "passport";
 import "express-async-errors";
 
 import User from "@/models/userModel";
@@ -70,3 +71,9 @@ export const register = async (req: Request, res: Response) => {
 	);
 	return res.json({ msg: "succes", newUser: newUser, token });
 };
+
+// GOOGLE PROVIDER
+
+export const googleProvider = passport.authenticate("google", {
+	scope: ["email", "profile"],
+});

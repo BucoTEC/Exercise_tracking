@@ -24,11 +24,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.get(
-	"/api/auth/google",
-	passport.authenticate("google", { scope: ["email", "profile"] })
-);
-
-app.get(
 	"/api/auth/google/cal",
 	passport.authenticate("google", {
 		session: false,
