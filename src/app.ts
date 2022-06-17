@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("welcome to server");
+	res.send("<a href='/api/auth/google'>Login with google</a>");
 });
 
 app.use("/api/auth", auth);

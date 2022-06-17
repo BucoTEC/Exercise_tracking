@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import passport from "passport";
 import "express-async-errors";
 
 import User from "@/models/userModel";
 import ResError from "@/utils/errors/customError";
+import "@/utils/googleAuth";
 
 dotenv.config();
 
@@ -70,3 +72,68 @@ export const register = async (req: Request, res: Response) => {
 	);
 	return res.json({ msg: "succes", newUser: newUser, token });
 };
+
+// GOOGLE PROVIDER
+
+export const googleProvider = passport.authenticate("google", {
+	scope: ["email", "profile"],
+});
+
+// GOOGLE CALLBACK
+
+export const googleCallback = [
+	passport.authenticate("google", {
+		session: false,
+	}),
+	async (req: any, res: Response) => {
+		/* eslint-disable */
+		const { email, name, sub } = req.user?._json;
+		/* eslint-enable */
+
+		const existingUser = await User.findOne({ where: { email } });
+
+		if (!existingUser) {
+			const hashedPassword = await bcrypt.hash(sub, 12);
+
+			const newUser = await User.create({
+				username: name,
+				email,
+				password: hashedPassword,
+			});
+			const token = jwt.sign(
+				{
+					userId: newUser.id,
+					userEmail: newUser.email,
+				},
+				tokenSecret
+				// { expiresIn: "10m" }
+			);
+
+			req.user = null;
+			return res.json({
+				msg: "succes registerd user",
+				newUser: newUser,
+				token,
+			});
+		}
+
+		// IF USER EXISTS IN DB LOGIN USER
+
+		const token = jwt.sign(
+			{
+				userId: existingUser.id,
+				userEmail: existingUser.email,
+			},
+			tokenSecret
+			// { expiresIn: "1h" }
+		);
+
+		req.user = null;
+		return res.json({
+			msg: "succes login user",
+			userId: existingUser.id,
+			userEmail: existingUser.email,
+			token,
+		});
+	},
+];
