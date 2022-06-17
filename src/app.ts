@@ -6,14 +6,12 @@ import users from "@/routes/users";
 import exercises from "@/routes/exercises";
 import ResError from "@/utils/errors/customError";
 import errorHandler from "@/utils/errors/errorHandler";
-import "@/utils/googleAuth";
 
 import connectDb from "@/db/connectDB";
 import authVerificator from "@/middleware/auth.middleware";
 
 import dotenv from "dotenv";
 import cors from "cors";
-import passport from "passport";
 
 dotenv.config();
 app.use(express.json());
@@ -22,16 +20,6 @@ app.use(cors());
 app.get("/", (req: Request, res: Response) => {
 	res.send("<a href='/api/auth/google'>Login with google</a>");
 });
-
-app.get(
-	"/api/auth/google/cal",
-	passport.authenticate("google", {
-		session: false,
-	}),
-	(req: Request, res: Response) => {
-		res.send(req.user);
-	}
-);
 
 app.use("/api/auth", auth);
 app.use("/api/users", authVerificator, users);

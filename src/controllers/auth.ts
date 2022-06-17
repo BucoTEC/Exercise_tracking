@@ -7,6 +7,7 @@ import "express-async-errors";
 
 import User from "@/models/userModel";
 import ResError from "@/utils/errors/customError";
+import "@/utils/googleAuth";
 
 dotenv.config();
 
@@ -77,3 +78,14 @@ export const register = async (req: Request, res: Response) => {
 export const googleProvider = passport.authenticate("google", {
 	scope: ["email", "profile"],
 });
+
+// GOOGLE CALLBACK
+
+export const googleCallback = [
+	passport.authenticate("google", {
+		session: false,
+	}),
+	(req: Request, res: Response) => {
+		res.send(req.user);
+	},
+];
