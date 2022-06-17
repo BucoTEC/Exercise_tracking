@@ -85,7 +85,50 @@ export const googleCallback = [
 	passport.authenticate("google", {
 		session: false,
 	}),
-	(req: Request, res: Response) => {
-		res.send(req.user);
+	async (req: any, res: Response) => {
+		/* eslint-disable */
+		const { email, name, sub } = req.user?._json;
+		/* eslint-enable */
+
+		const existingUser = await User.findOne({ where: { email } });
+
+		if (!existingUser) {
+			const hashedPassword = await bcrypt.hash(sub, 12);
+
+			const newUser = await User.create({
+				username: name,
+				email,
+				password: hashedPassword,
+			});
+			const token = jwt.sign(
+				{
+					userId: newUser.id,
+					userEmail: newUser.email,
+				},
+				tokenSecret
+				// { expiresIn: "10m" }
+			);
+
+			req.user = null;
+			return res.json({ msg: "succes", newUser: newUser, token });
+		}
+
+		// IF USER EXISTS IN DB LOGIN USER
+
+		const token = jwt.sign(
+			{
+				userId: existingUser.id,
+				userEmail: existingUser.email,
+			},
+			tokenSecret
+			// { expiresIn: "1h" }
+		);
+
+		req.user = null;
+		return res.json({
+			token,
+			userId: existingUser.id,
+			userEmail: existingUser.email,
+		});
 	},
 ];
