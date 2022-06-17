@@ -110,7 +110,11 @@ export const googleCallback = [
 			);
 
 			req.user = null;
-			return res.json({ msg: "succes", newUser: newUser, token });
+			return res.json({
+				msg: "succes registerd user",
+				newUser: newUser,
+				token,
+			});
 		}
 
 		// IF USER EXISTS IN DB LOGIN USER
@@ -126,9 +130,10 @@ export const googleCallback = [
 
 		req.user = null;
 		return res.json({
-			token,
+			msg: "succes login user",
 			userId: existingUser.id,
 			userEmail: existingUser.email,
+			token,
 		});
 	},
 ];
