@@ -6,20 +6,43 @@ import users from "@/routes/users";
 import exercises from "@/routes/exercises";
 import ResError from "@/utils/errors/customError";
 import errorHandler from "@/utils/errors/errorHandler";
+import "@/utils/googleAuth";
 
 import connectDb from "@/db/connectDB";
 import authVerificator from "@/middleware/auth.middleware";
 
 import dotenv from "dotenv";
 import cors from "cors";
+import passport from "passport";
 
 dotenv.config();
 app.use(express.json());
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("welcome to server");
+	res.send("<a href='/google/auth'>Login with google</a>");
 });
+
+app.get("/fail", (req: Request, res: Response) => {
+	res.send("fail login");
+});
+
+app.get("/success", (req: Request, res: Response) => {
+	res.send("succes login");
+});
+
+app.get(
+	"/google/auth",
+	passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+app.get(
+	"/google/cal",
+	passport.authenticate("google", {
+		successRedirect: "/success",
+		failureRedirect: "/fail",
+	})
+);
 
 app.use("/api/auth", auth);
 app.use("/api/users", authVerificator, users);
