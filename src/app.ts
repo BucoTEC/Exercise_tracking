@@ -20,16 +20,16 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("<a href='/google/auth'>Login with google</a>");
+	res.send("<a href='/api/auth/google'>Login with google</a>");
 });
 
 app.get(
-	"/google/auth",
+	"/api/auth/google",
 	passport.authenticate("google", { scope: ["email", "profile"] })
 );
 
 app.get(
-	"/google/cal",
+	"/api/auth/google/cal",
 	passport.authenticate("google", {
 		session: false,
 	}),

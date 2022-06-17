@@ -13,7 +13,7 @@ passport.use(
 		{
 			clientID: googleClId,
 			clientSecret: googleClSecret,
-			callbackURL: "http://localhost:5000/google/cal",
+			callbackURL: "http://localhost:5000/api/auth/google/cal",
 			passReqToCallback: true,
 		},
 		function (req: any, token: any, tokenSecret: any, profile: any, done: any) {
